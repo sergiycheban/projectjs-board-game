@@ -26,7 +26,7 @@ HeroCell.prototype.draw = function() {
     this.height
   );
   if (this.hero != null) {
-    CanvasManagerHeroSelectionFields.context.font = "20px Georgia";
+    CanvasManagerHeroSelectionFields.context.font = "30px Courier New";
     CanvasManagerHeroSelectionFields.context.fillStyle = "red";
     CanvasManagerHeroSelectionFields.context.fillText(
       this.name + " " + this.count,

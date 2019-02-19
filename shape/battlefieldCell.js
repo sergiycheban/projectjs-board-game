@@ -21,19 +21,11 @@ Cell.prototype.drawCell = function() {
     this.width,
     this.width
   );
-  if (this.hero != null) {
-    CanvasManagerHeroSelectionFields.context.fillStyle = "red";
-    CanvasManagerBattlefield.context.fillText(
-      this.hero,
-      this.x + this.width,
-      this.y + this.width / 2
-    );
-  }
 };
 
 Cell.prototype.drawHeroInCell = function() {
   if (this.hero != null) {
-    CanvasManagerHeroSelectionFields.context.font = "50px Verdana";
+    CanvasManagerBattlefield.context.font = "30px Courier New";
     CanvasManagerBattlefield.context.fillStyle = "red";
     CanvasManagerBattlefield.context.fillText(
       this.hero.symbol,

@@ -17,7 +17,6 @@ var CanvasManagerBattlefield = {
 
   generationBattlefield: function() {
     var color = "";
-    let content = null;
     let squareWidth = this.width / this.row;
     let totalSquares = this.row * this.col;
     let i = 0,

@@ -8,44 +8,7 @@ var CanvasManagerHeroSelectionFields = {
   context: null,
   width: 200,
   height: 50,
-  listOfHeroes: [
-    {
-      hero: {
-        name: "Рицър",
-        symbol: "Р",
-        attack: 8,
-        armor: 3,
-        HP: 15,
-        impactRadius: 1,
-        speed: 1
-      },
-      count: 2
-    },
-    {
-      hero: {
-        name: "Елф",
-        symbol: "Е",
-        attack: 5,
-        armor: 1,
-        HP: 10,
-        impactRadius: 3,
-        speed: 3
-      },
-      count: 2
-    },
-    {
-      hero: {
-        name: "Джуджет",
-        symbol: "Д",
-        attack: 6,
-        armor: 2,
-        HP: 12,
-        impactRadius: 2,
-        speed: 2
-      },
-      count: 2
-    }
-  ],
+  color: "#d1eefc",
   heroCollection: [],
 
   initialize: function(element) {
@@ -54,25 +17,25 @@ var CanvasManagerHeroSelectionFields = {
   },
 
   generationHeroSelectionFields: function() {
-    for (let index = 0; index < this.listOfHeroes.length; index++) {
+    for (let index = 0; index < listOfHeroes.length; index++) {
       this.heroCollection.push(
         new HeroCell(
           CanvasManagerBattlefield.width + INDENT_FROM_BATTLEFIELD,
           this.height * index + INDENT_FROM_START,
           this.width,
           this.height,
-          this.listOfHeroes[index].hero.name,
-          "white",
+          listOfHeroes[index].hero.name,
+          this.color,
           new Hero(
-            this.listOfHeroes[index].hero.name,
-            this.listOfHeroes[index].hero.symbol,
-            this.listOfHeroes[index].hero.attack,
-            this.listOfHeroes[index].hero.armor,
-            this.listOfHeroes[index].hero.HP,
-            this.listOfHeroes[index].hero.impactRadius,
-            this.listOfHeroes[index].hero.speed
+            listOfHeroes[index].hero.name,
+            listOfHeroes[index].hero.symbol,
+            listOfHeroes[index].hero.attack,
+            listOfHeroes[index].hero.armor,
+            listOfHeroes[index].hero.HP,
+            listOfHeroes[index].hero.impactRadius,
+            listOfHeroes[index].hero.speed
           ),
-          this.listOfHeroes[index].count
+          listOfHeroes[index].count
         )
       );
     }
@@ -105,7 +68,6 @@ var CanvasManagerHeroSelectionFields = {
   },
 
   getSelectedHero: function() {
-    console.log("call" + selectedHero);
     return selectedHero;
   }
 };
