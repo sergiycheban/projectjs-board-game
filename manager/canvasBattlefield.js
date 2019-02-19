@@ -69,7 +69,6 @@ var CanvasManagerBattlefield = {
         square.drawCell();
       }
     }
-    // this.boardCollection = [];
   },
 
   clickOnCell: function() {
@@ -83,12 +82,11 @@ var CanvasManagerBattlefield = {
           var square = boardRows[i][j];
           if (square.cellContainsCoordinates(e.clientX, e.clientY)) {
             if (square.hero == null) {
-              console.log(hero);
-              square.hero = hero[0];
-              hero.splice(0, 1);
+              square.hero = hero;
+              hero = null;
               square.drawHeroInCell();
             } else {
-              console.log("Here a hero" + "   " + e.clientX + " " + e.clientY);
+              console.log("Here a hero");
             }
           }
         }

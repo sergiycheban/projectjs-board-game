@@ -1,7 +1,12 @@
 var INDENT_FROM_BATTLEFIELD = 150;
 var INDENT_FROM_START = 15;
 
-var selectedHero = [];
+var selectedHero = null;
+
+const PLAYERS = {
+  PLAYER_ONE: true,
+  PLAYER_TWO: false
+};
 
 var CanvasManagerHeroSelectionFields = {
   canvas: null,
@@ -58,9 +63,14 @@ var CanvasManagerHeroSelectionFields = {
         var hero = heroCollection[i];
         if (hero.cellContainsCoordinates(e.clientX, e.clientY)) {
           if (hero.count > 0) {
-            selectedHero.push(hero.hero);
+            selectedHero = hero.hero;
             hero.count--;
             hero.draw();
+            if (PLAYERS.PLAYER_ONE == false) {
+              PLAYERS.PLAYER_ONE = true;
+            } else if (PLAYERS.PLAYER_TWO == false) {
+              PLAYERS.PLAYER_TWO = true;
+            }
           }
         }
       }
