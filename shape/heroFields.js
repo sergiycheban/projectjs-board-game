@@ -1,6 +1,6 @@
 var INDENT_FROM_EDGE = 3;
 
-var HeroCell = function(x, y, width, height, name, color, hero) {
+var HeroCell = function(x, y, width, height, name, color, hero, count) {
   this.x = x;
   this.y = y;
   this.width = width;
@@ -8,6 +8,7 @@ var HeroCell = function(x, y, width, height, name, color, hero) {
   this.name = name;
   this.color = color;
   this.hero = hero;
+  this.count = count;
 };
 
 HeroCell.prototype.draw = function() {
@@ -28,7 +29,7 @@ HeroCell.prototype.draw = function() {
     CanvasManagerHeroSelectionFields.context.font = "20px Georgia";
     CanvasManagerHeroSelectionFields.context.fillStyle = "red";
     CanvasManagerHeroSelectionFields.context.fillText(
-      this.name,
+      this.name + " " + this.count,
       this.x + INDENT_FROM_EDGE,
       this.y + this.height / 2
     );

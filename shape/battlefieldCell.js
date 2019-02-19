@@ -22,11 +22,10 @@ Cell.prototype.drawCell = function() {
     this.width
   );
   if (this.hero != null) {
-    CanvasManagerHeroSelectionFields.context.font = "30px Verdana";
     CanvasManagerHeroSelectionFields.context.fillStyle = "red";
     CanvasManagerBattlefield.context.fillText(
       this.hero,
-      this.x + this.width / 2,
+      this.x + this.width,
       this.y + this.width / 2
     );
   }
@@ -34,9 +33,10 @@ Cell.prototype.drawCell = function() {
 
 Cell.prototype.drawHeroInCell = function() {
   if (this.hero != null) {
+    CanvasManagerHeroSelectionFields.context.font = "50px Verdana";
     CanvasManagerBattlefield.context.fillStyle = "red";
     CanvasManagerBattlefield.context.fillText(
-      this.hero,
+      this.hero.symbol,
       this.x + this.width / 2,
       this.y + this.width / 2,
       150

@@ -1,6 +1,7 @@
 var CanvasManagerBattlefield = {
   canvas: null,
   context: null,
+  hero: null,
   width: 800,
   territoryPlayerA: 1,
   territoryPlayerB: 5,
@@ -48,7 +49,7 @@ var CanvasManagerBattlefield = {
           squareWidth,
           squareName,
           color,
-          content
+          this.hero
         )
       );
     }
@@ -56,7 +57,6 @@ var CanvasManagerBattlefield = {
     for (let index = 0; index < this.boardCollection.length; index++) {
       this.boardCollection[index].splice(0, 1);
     }
-    console.log(this.boardCollection);
     this.drawBoard();
     this.clickOnCell();
   },
@@ -70,19 +70,23 @@ var CanvasManagerBattlefield = {
         square.drawCell();
       }
     }
+    // this.boardCollection = [];
   },
 
   clickOnCell: function() {
     var boardRows = this.boardCollection;
+
     this.canvas.addEventListener("click", function(e) {
+      var hero = CanvasManagerHeroSelectionFields.getSelectedHero();
       for (var i = 0; i < boardRows.length; i++) {
         var row = boardRows[i];
         for (var j = 0; j < row.length; j++) {
           var square = boardRows[i][j];
-
           if (square.cellContainsCoordinates(e.clientX, e.clientY)) {
             if (square.hero == null) {
-              square.hero = "A";
+              console.log(hero);
+              square.hero = hero[0];
+              hero.splice(0, 1);
               square.drawHeroInCell();
             } else {
               console.log("Here a hero" + "   " + e.clientX + " " + e.clientY);
