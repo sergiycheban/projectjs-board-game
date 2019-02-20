@@ -1,5 +1,5 @@
-var INDENT_FROM_BATTLEFIELD = 150;
-var INDENT_FROM_START = 15;
+const INDENT_FROM_BATTLEFIELD = 150;
+const INDENT_FROM_START = 15;
 
 var selectedHero = null;
 
@@ -15,6 +15,7 @@ var CanvasManagerHeroSelectionFields = {
   height: 50,
   color: "#d1eefc",
   heroCollection: [],
+  heroForPlayer: [],
 
   initialize: function(element) {
     this.canvas = document.querySelector(element);
@@ -23,6 +24,20 @@ var CanvasManagerHeroSelectionFields = {
 
   generationHeroSelectionFields: function() {
     for (let index = 0; index < listOfHeroes.length; index++) {
+      
+      for (let index = 0; index < listOfHeroes[index].count; index++) {
+      
+      this.heroForPlayer.push(           new Hero(
+        listOfHeroes[index].hero.name,
+        listOfHeroes[index].hero.symbol,
+        listOfHeroes[index].hero.attack,
+        listOfHeroes[index].hero.armor,
+        listOfHeroes[index].hero.HP,
+        listOfHeroes[index].hero.impactRadius,
+        listOfHeroes[index].hero.speed
+      ) );
+      }
+
       this.heroCollection.push(
         new HeroCell(
           CanvasManagerBattlefield.width + INDENT_FROM_BATTLEFIELD,
