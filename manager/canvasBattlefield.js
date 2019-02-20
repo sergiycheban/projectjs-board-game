@@ -86,7 +86,7 @@ var CanvasManagerBattlefield = {
               hero = null;
               square.drawHeroInCell();
             } else {
-              console.log("Here a hero");
+              console.log(gamePlay.putHeroOnCell());
             }
           }
         }

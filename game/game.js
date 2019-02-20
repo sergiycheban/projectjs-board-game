@@ -13,3 +13,7 @@ var GamePlay = function(heroOfPlayer , count , board) {
   GamePlay.prototype.getHeroOfPlayer2 = function() {
     return this.heroOfPlayer[1];
   };
+
+  GamePlay.prototype.putHeroOnCell = function() {
+      console.log("putHeroOnCell")
+  };

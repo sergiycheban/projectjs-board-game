@@ -1,3 +1,5 @@
+var gamePlay = null;
+
 function startGame(){
     CanvasManagerBattlefield.initialize("#canvas");
     CanvasManagerBattlefield.generationBattlefield();
