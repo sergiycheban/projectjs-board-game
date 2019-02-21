@@ -32,7 +32,6 @@ var CanvasManagerBattlefield = {
         this.boardCollection.push(boardRows);
         boardRows = [];
       }
-      console.log(y);
       if (y <= this.territoryPlayerA || y >= this.territoryPlayerB) {
         color =
           (x + y) % 2
@@ -76,6 +75,7 @@ var CanvasManagerBattlefield = {
 
     this.canvas.addEventListener("click", function(e) {
       var hero = CanvasManagerHeroSelectionFields.getSelectedHero();
+      console.log(hero);
       for (var i = 0; i < boardRows.length; i++) {
         var row = boardRows[i];
         for (var j = 0; j < row.length; j++) {
@@ -85,6 +85,14 @@ var CanvasManagerBattlefield = {
               square.hero = hero;
               hero = null;
               square.drawHeroInCell();
+              gamePlay.changePlayer();
+              for (
+                let index = 0;
+                index < CanvasManagerHeroSelectionFields.heroCollection.length;
+                index++
+              ) {
+                CanvasManagerHeroSelectionFields.heroCollection[index].draw();
+              }
             } else {
               console.log(gamePlay.putHeroOnCell());
             }

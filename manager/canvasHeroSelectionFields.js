@@ -3,11 +3,6 @@ const INDENT_FROM_START = 15;
 
 var selectedHero = null;
 
-const PLAYERS = {
-  PLAYER_ONE: true,
-  PLAYER_TWO: false
-};
-
 var CanvasManagerHeroSelectionFields = {
   canvas: null,
   context: null,
@@ -24,20 +19,6 @@ var CanvasManagerHeroSelectionFields = {
 
   generationHeroSelectionFields: function() {
     for (let index = 0; index < listOfHeroes.length; index++) {
-      
-      for (let index = 0; index < listOfHeroes[index].count; index++) {
-      
-      this.heroForPlayer.push(           new Hero(
-        listOfHeroes[index].hero.name,
-        listOfHeroes[index].hero.symbol,
-        listOfHeroes[index].hero.attack,
-        listOfHeroes[index].hero.armor,
-        listOfHeroes[index].hero.HP,
-        listOfHeroes[index].hero.impactRadius,
-        listOfHeroes[index].hero.speed
-      ) );
-      }
-
       this.heroCollection.push(
         new HeroCell(
           CanvasManagerBattlefield.width + INDENT_FROM_BATTLEFIELD,
@@ -46,16 +27,7 @@ var CanvasManagerHeroSelectionFields = {
           this.height,
           listOfHeroes[index].hero.name,
           this.color,
-          new Hero(
-            listOfHeroes[index].hero.name,
-            listOfHeroes[index].hero.symbol,
-            listOfHeroes[index].hero.attack,
-            listOfHeroes[index].hero.armor,
-            listOfHeroes[index].hero.HP,
-            listOfHeroes[index].hero.impactRadius,
-            listOfHeroes[index].hero.speed
-          ),
-          listOfHeroes[index].count
+          index
         )
       );
     }
@@ -77,16 +49,10 @@ var CanvasManagerHeroSelectionFields = {
       for (var i = 0; i < heroCollection.length; i++) {
         var hero = heroCollection[i];
         if (hero.cellContainsCoordinates(e.clientX, e.clientY)) {
-          if (hero.count > 0) {
-            selectedHero = hero.hero;
-            hero.count--;
-            hero.draw();
-            if (PLAYERS.PLAYER_ONE == false) {
-              PLAYERS.PLAYER_ONE = true;
-            } else if (PLAYERS.PLAYER_TWO == false) {
-              PLAYERS.PLAYER_TWO = true;
-            }
-          }
+          selectedHero = gamePlay.getHeroOfPlayer()[1].hero.symbol;
+          gamePlay.getHeroOfPlayer()[hero.numberHero].count--;
+          console.log(gamePlay.getHeroOfPlayer()[hero.numberHero]);
+          hero.draw();
         }
       }
     });

@@ -28,7 +28,7 @@ Cell.prototype.drawHeroInCell = function() {
     CanvasManagerBattlefield.context.font = "30px Courier New";
     CanvasManagerBattlefield.context.fillStyle = "red";
     CanvasManagerBattlefield.context.fillText(
-      this.hero.symbol,
+      this.hero,
       this.x + this.width / 2,
       this.y + this.width / 2,
       150
