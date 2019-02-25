@@ -3,12 +3,14 @@ var PLAYERS = {
   PLAYER_TWO: false
 };
 
-var GamePlay = function(heroOfPlayers, count, board) {
-  debugger;
+var GamePlay = function(heroOfPlayers1, heroOfPlayers2, board) {
   this.heroOfPlayers = [];
-  for (let index = 0; index < count; index++) {
-    this.heroOfPlayers.push(heroOfPlayers);
-  }
+  this.heroOfPlayers.push(heroOfPlayers1);
+  this.heroOfPlayers.push(heroOfPlayers2);
+  // for (let index = 0; index < count; index++) {
+  //   // heroOfPlayers[0][index].count--;
+  //   this.heroOfPlayers.push(heroOfPlayers);
+  // }
   this.board = board;
 };
 
@@ -20,18 +22,18 @@ GamePlay.prototype.getHeroOfPlayer = function() {
   }
 };
 
-// GamePlay.prototype.getCountHero = function(player, hero) {
-//   var indexOfPlayer = player == 1 ? 0 : 1;
-//   for (
-//     let index = 0;
-//     index < this.heroOfPlayers[indexOfPlayer].length;
-//     index++
-//   ) {
-//     if (this.heroOfPlayers[indexOfPlayer].hero.name == hero) {
-//       return this.heroOfPlayers[indexOfPlayer].count;
-//     }
-//   }
-// };
+GamePlay.prototype.changeCountOfHero = function(i) {
+  if (!this.heroOfPlayers[0][i].count == 0) {
+    if (PLAYERS.PLAYER_ONE == true) {
+      this.heroOfPlayers[0][i].count--;
+    }
+  }
+  if (!this.heroOfPlayers[1][i].count == 0) {
+    if (PLAYERS.PLAYER_TWO == true) {
+      this.heroOfPlayers[1][i].count--;
+    }
+  }
+};
 
 GamePlay.prototype.changePlayer = function() {
   if (PLAYERS.PLAYER_ONE == true) {

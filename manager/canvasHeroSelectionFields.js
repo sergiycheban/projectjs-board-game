@@ -27,7 +27,8 @@ var CanvasManagerHeroSelectionFields = {
           this.height,
           listOfHeroes[index].hero.name,
           this.color,
-          index
+          index,
+          listOfHeroes[index].hero.symbol
         )
       );
     }
@@ -49,9 +50,8 @@ var CanvasManagerHeroSelectionFields = {
       for (var i = 0; i < heroCollection.length; i++) {
         var hero = heroCollection[i];
         if (hero.cellContainsCoordinates(e.clientX, e.clientY)) {
-          selectedHero = gamePlay.getHeroOfPlayer()[1].hero.symbol;
-          gamePlay.getHeroOfPlayer()[hero.numberHero].count--;
-          console.log(gamePlay.getHeroOfPlayer()[hero.numberHero]);
+          selectedHero = gamePlay.getHeroOfPlayer()[hero.numberHero];
+          gamePlay.changeCountOfHero(hero.numberHero);
           hero.draw();
         }
       }
@@ -60,5 +60,9 @@ var CanvasManagerHeroSelectionFields = {
 
   getSelectedHero: function() {
     return selectedHero;
+  },
+
+  setSelectedHeroNull: function() {
+    selectedHero = null;
   }
 };

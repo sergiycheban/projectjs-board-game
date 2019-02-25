@@ -61,6 +61,7 @@ var CanvasManagerBattlefield = {
 
   drawBoard: function() {
     var boardRows = this.boardCollection;
+
     for (var i = 0; i < boardRows.length; i++) {
       var row = boardRows[i];
       for (var j = 0; j < row.length; j++) {
@@ -75,7 +76,6 @@ var CanvasManagerBattlefield = {
 
     this.canvas.addEventListener("click", function(e) {
       var hero = CanvasManagerHeroSelectionFields.getSelectedHero();
-      console.log(hero);
       for (var i = 0; i < boardRows.length; i++) {
         var row = boardRows[i];
         for (var j = 0; j < row.length; j++) {
@@ -83,18 +83,12 @@ var CanvasManagerBattlefield = {
           if (square.cellContainsCoordinates(e.clientX, e.clientY)) {
             if (square.hero == null) {
               square.hero = hero;
-              hero = null;
               square.drawHeroInCell();
               gamePlay.changePlayer();
-              for (
-                let index = 0;
-                index < CanvasManagerHeroSelectionFields.heroCollection.length;
-                index++
-              ) {
-                CanvasManagerHeroSelectionFields.heroCollection[index].draw();
-              }
+              CanvasManagerHeroSelectionFields.drawBoard();
+              CanvasManagerHeroSelectionFields.setSelectedHeroNull();
             } else {
-              console.log(gamePlay.putHeroOnCell());
+              console.log("This cell is busy");
             }
           }
         }

@@ -1,6 +1,6 @@
 var INDENT_FROM_EDGE = 3;
 
-var HeroCell = function(x, y, width, height, name, color, numberHero) {
+var HeroCell = function(x, y, width, height, name, color, numberHero, symbol) {
   this.x = x;
   this.y = y;
   this.width = width;
@@ -8,9 +8,13 @@ var HeroCell = function(x, y, width, height, name, color, numberHero) {
   this.name = name;
   this.color = color;
   this.numberHero = numberHero;
+  this.heroSymbol = symbol;
 };
 
 HeroCell.prototype.draw = function() {
+  var name = gamePlay.getHeroOfPlayer()[this.numberHero].hero.name;
+  var count = gamePlay.getHeroOfPlayer()[this.numberHero].count;
+
   CanvasManagerHeroSelectionFields.context.fillStyle = this.color;
   CanvasManagerHeroSelectionFields.context.strokeRect(
     this.x,
@@ -24,13 +28,6 @@ HeroCell.prototype.draw = function() {
     this.width,
     this.height
   );
-
-  // console.log(
-  //   JSON.stringify(gamePlay.getHeroOfPlayer()) +
-  //     "               1111111111111111"
-  // );
-  var name = gamePlay.getHeroOfPlayer()[this.numberHero].hero.name;
-  var count = gamePlay.getHeroOfPlayer()[this.numberHero].count;
 
   if (JSON.stringify(gamePlay.getHeroOfPlayer()) != null) {
     CanvasManagerHeroSelectionFields.context.font = "30px Courier New";

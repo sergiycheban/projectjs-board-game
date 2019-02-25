@@ -1,8 +1,24 @@
 var gamePlay = null;
-var heroForPlayer = [];
+var heroForPlayer1 = [];
+var heroForPlayer2 = [];
 
 for (let index = 0; index < listOfHeroes.length; index++) {
-  heroForPlayer.push({
+  heroForPlayer1.push({
+    hero: new Hero(
+      listOfHeroes[index].hero.name,
+      listOfHeroes[index].hero.symbol,
+      listOfHeroes[index].hero.attack,
+      listOfHeroes[index].hero.armor,
+      listOfHeroes[index].hero.HP,
+      listOfHeroes[index].hero.impactRadius,
+      listOfHeroes[index].hero.speed
+    ),
+    count: listOfHeroes[index].count
+  });
+}
+
+for (let index = 0; index < listOfHeroes.length; index++) {
+  heroForPlayer2.push({
     hero: new Hero(
       listOfHeroes[index].hero.name,
       listOfHeroes[index].hero.symbol,
@@ -18,8 +34,8 @@ for (let index = 0; index < listOfHeroes.length; index++) {
 
 function startGame() {
   gamePlay = new GamePlay(
-    heroForPlayer,
-    2,
+    heroForPlayer1,
+    heroForPlayer2,
     CanvasManagerBattlefield.boardCollection
   );
   CanvasManagerBattlefield.initialize("#canvas");
