@@ -19,14 +19,7 @@ var CanvasManagerBattlefield = {
     this.canvas = document.querySelector(element);
     this.context = this.canvas.getContext("2d");
   },
-  // if (y > this.territoryPlayerA || y < this.territoryPlayerB) {
-  //   var arr = this.randomBarriersPlace();
-  //   for (let index = 0; index < arr.length; index++) {
-  //     if (arr[index] == i) {
-  //       this.color = "#000000";
-  //     }
-  //   }
-  // }
+
   generationBattlefield: function() {
     let squareWidth = this.width / this.row;
     let totalSquares = this.row * this.col;
@@ -45,7 +38,14 @@ var CanvasManagerBattlefield = {
         boardRows = [];
       }
       this.setTerritoryColor(y, x);
-
+      if (y > this.territoryPlayerA || y < this.territoryPlayerB) {
+        var arr = this.randomBarriersPlace();
+        for (let index = 0; index < arr.length; index++) {
+          if (arr[index] == i) {
+            this.color = "#000000";
+          }
+        }
+      }
       boardRows.push(
         new Cell(
           x * squareWidth - squareWidth,
