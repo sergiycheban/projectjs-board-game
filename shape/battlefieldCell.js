@@ -25,8 +25,8 @@ Cell.prototype.drawCell = function() {
 
 Cell.prototype.drawHeroInCell = function() {
   if (this.hero != null) {
-    CanvasManagerBattlefield.context.font = "30px Courier New";
-    CanvasManagerBattlefield.context.fillStyle = "#0000ff";
+    CanvasManagerBattlefield.context.font = "35px Courier New";
+    CanvasManagerBattlefield.context.fillStyle = "#DD2C00";
     CanvasManagerBattlefield.context.fillText(
       this.hero.hero.symbol,
       this.x + this.width / 2,

@@ -1,25 +1,36 @@
+const NUMBER_OF_PLAYER_ROWS = 2;
+const MAX_NUMBER_OF_BARRIER = 5;
+const MIN_NUMBER_OF_BARRIER = 1;
+
 var CanvasManagerBattlefield = {
   canvas: null,
   context: null,
   content: null,
   color: null,
-  // own: null,
   width: 800,
   territoryPlayerA: 1,
   territoryPlayerB: 5,
   row: 8,
   col: 10,
   boardCollection: [],
-  colorsForTerritoryPlayers: { light: "#d1eefc", dark: "#1f1f21" },
-  colorsForTerritoryBattle: "#848482",
+  colorsForTerritoryPlayers: { light: "#90CAF9", dark: "#FFCC80" },
+  colorsForTerritoryBattle: "#E0E0E0",
   initialize: function(element) {
     this.canvas = document.querySelector(element);
     this.context = this.canvas.getContext("2d");
   },
-
+  // if (y > this.territoryPlayerA || y < this.territoryPlayerB) {
+  //   var arr = this.randomBarriersPlace();
+  //   for (let index = 0; index < arr.length; index++) {
+  //     if (arr[index] == i) {
+  //       this.color = "#000000";
+  //     }
+  //   }
+  // }
   generationBattlefield: function() {
     let squareWidth = this.width / this.row;
     let totalSquares = this.row * this.col;
+    console.log(totalSquares);
     let i = 0,
       x = 0,
       y = -1;
@@ -33,7 +44,7 @@ var CanvasManagerBattlefield = {
         this.boardCollection.push(boardRows);
         boardRows = [];
       }
-      this.getTerritoryColor(y, x);
+      this.setTerritoryColor(y, x);
 
       boardRows.push(
         new Cell(
@@ -77,8 +88,9 @@ var CanvasManagerBattlefield = {
         for (var j = 0; j < row.length; j++) {
           var square = boardRows[i][j];
           if (square.cellContainsCoordinates(e.clientX, e.clientY)) {
-            if (square.hero == null) {
+            if (square.hero == null || hero != null) {
               square.hero = hero;
+              hero = null;
               square.drawHeroInCell();
               gamePlay.changePlayer();
               CanvasManagerHeroSelectionFields.drawBoard();
@@ -89,9 +101,9 @@ var CanvasManagerBattlefield = {
               }
             } else {
               console.log("square");
-              square.color = "#9965f4";
-              square.drawCell();
-              square.drawHeroInCell();
+              // square.color = "#9965f4";
+              // square.drawCell();
+              // square.drawHeroInCell();
             }
           }
         }
@@ -99,7 +111,7 @@ var CanvasManagerBattlefield = {
     });
   },
 
-  getTerritoryColor: function(row, col) {
+  setTerritoryColor: function(row, col) {
     if (row <= this.territoryPlayerA || row >= this.territoryPlayerB) {
       this.color =
         (col + row) % 2
@@ -108,5 +120,34 @@ var CanvasManagerBattlefield = {
     } else {
       this.color = this.colorsForTerritoryBattle;
     }
+  },
+
+  setBarriers: function(row) {
+    if (row > this.territoryPlayerA || row < this.territoryPlayerB) {
+    }
+  },
+
+  randomBarriersPlace: function() {
+    var arrayOfPlaceBarriesrs = [];
+    var numberOfBarriers =
+      Math.floor(Math.random() * MAX_NUMBER_OF_BARRIER) + MIN_NUMBER_OF_BARRIER;
+
+    for (let index = 0; index < numberOfBarriers; index++) {
+      arrayOfPlaceBarriesrs.push(
+        Math.floor(Math.random() * this.getNumberOfCellTerritoryBattleCount()) +
+          1 +
+          27
+      );
+    }
+
+    return arrayOfPlaceBarriesrs;
+  },
+
+  getNumberOfCellTerritoryBattleCount: function(row) {
+    var cellСount = (this.row - 1) * (this.col - 1);
+    var cellTerritoryPlayersCount = (this.col - 1) * NUMBER_OF_PLAYER_ROWS * 2;
+    var cellTerritoryBattleCount = cellСount - cellTerritoryPlayersCount;
+
+    return cellTerritoryBattleCount;
   }
 };
