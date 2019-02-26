@@ -3,6 +3,11 @@ var PLAYERS = {
   PLAYER_TWO: false
 };
 
+var GAME = {
+  BATTLE_PREPARATION: true,
+  BATTLE: false
+};
+
 var GamePlay = function(heroOfPlayers1, heroOfPlayers2, board) {
   this.heroOfPlayers = [];
   this.heroOfPlayers.push(heroOfPlayers1);
@@ -43,6 +48,26 @@ GamePlay.prototype.changePlayer = function() {
     PLAYERS.PLAYER_ONE = true;
     PLAYERS.PLAYER_TWO = false;
   }
+};
+
+GamePlay.prototype.startBattle = function() {
+  GAME.BATTLE_PREPARATION = false;
+  GAME.BATTLE = true;
+};
+
+GamePlay.prototype.isEndPreparation = function() {
+  var isEndPreparation = false;
+  for (let index = 0; index < this.heroOfPlayers.length; index++) {
+    if (
+      this.heroOfPlayers[0][index].count == 0 &&
+      this.heroOfPlayers[1][index].count == 0
+    ) {
+      isEndPreparation = true;
+    } else {
+      return false;
+    }
+  }
+  return isEndPreparation;
 };
 
 GamePlay.prototype.putHeroOnCell = function() {

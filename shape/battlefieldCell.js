@@ -1,10 +1,10 @@
-var Cell = function(x, y, width, name, color, hero) {
+var Cell = function(x, y, width, name, color, content) {
   this.x = x;
   this.y = y;
   this.width = width;
   this.name = name;
   this.color = color;
-  this.hero = hero;
+  this.content = content;
 };
 
 Cell.prototype.drawCell = function() {
@@ -26,7 +26,7 @@ Cell.prototype.drawCell = function() {
 Cell.prototype.drawHeroInCell = function() {
   if (this.hero != null) {
     CanvasManagerBattlefield.context.font = "30px Courier New";
-    CanvasManagerBattlefield.context.fillStyle = "red";
+    CanvasManagerBattlefield.context.fillStyle = "#0000ff";
     CanvasManagerBattlefield.context.fillText(
       this.hero.hero.symbol,
       this.x + this.width / 2,

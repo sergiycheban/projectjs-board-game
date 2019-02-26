@@ -1,7 +1,9 @@
 var CanvasManagerBattlefield = {
   canvas: null,
   context: null,
-  hero: null,
+  content: null,
+  color: null,
+  // own: null,
   width: 800,
   territoryPlayerA: 1,
   territoryPlayerB: 5,
@@ -16,7 +18,6 @@ var CanvasManagerBattlefield = {
   },
 
   generationBattlefield: function() {
-    var color = "";
     let squareWidth = this.width / this.row;
     let totalSquares = this.row * this.col;
     let i = 0,
@@ -32,22 +33,17 @@ var CanvasManagerBattlefield = {
         this.boardCollection.push(boardRows);
         boardRows = [];
       }
-      if (y <= this.territoryPlayerA || y >= this.territoryPlayerB) {
-        color =
-          (x + y) % 2
-            ? this.colorsForTerritoryPlayers.dark
-            : this.colorsForTerritoryPlayers.light;
-      } else {
-        color = this.colorsForTerritoryBattle;
-      }
+      this.getTerritoryColor(y, x);
+
       boardRows.push(
         new Cell(
           x * squareWidth - squareWidth,
           y * squareWidth,
           squareWidth,
           squareName,
-          color,
-          this.hero
+          // own,
+          this.color,
+          this.content
         )
       );
     }
@@ -87,12 +83,30 @@ var CanvasManagerBattlefield = {
               gamePlay.changePlayer();
               CanvasManagerHeroSelectionFields.drawBoard();
               CanvasManagerHeroSelectionFields.setSelectedHeroNull();
+              if (gamePlay.isEndPreparation()) {
+                gamePlay.startBattle();
+                CanvasManagerHeroSelectionFields.clearBoard();
+              }
             } else {
-              console.log("This cell is busy");
+              console.log("square");
+              square.color = "#9965f4";
+              square.drawCell();
+              square.drawHeroInCell();
             }
           }
         }
       }
     });
+  },
+
+  getTerritoryColor: function(row, col) {
+    if (row <= this.territoryPlayerA || row >= this.territoryPlayerB) {
+      this.color =
+        (col + row) % 2
+          ? this.colorsForTerritoryPlayers.dark
+          : this.colorsForTerritoryPlayers.light;
+    } else {
+      this.color = this.colorsForTerritoryBattle;
+    }
   }
 };

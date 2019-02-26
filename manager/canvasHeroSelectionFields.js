@@ -44,15 +44,25 @@ var CanvasManagerHeroSelectionFields = {
     }
   },
 
+  clearBoard: function() {
+    var heroCollection = this.heroCollection;
+    for (var i = 0; i < heroCollection.length; i++) {
+      var hero = heroCollection[i];
+      hero.clear();
+    }
+  },
+
   clickOnCell: function() {
     var heroCollection = this.heroCollection;
     this.canvas.addEventListener("click", function(e) {
       for (var i = 0; i < heroCollection.length; i++) {
         var hero = heroCollection[i];
         if (hero.cellContainsCoordinates(e.clientX, e.clientY)) {
-          selectedHero = gamePlay.getHeroOfPlayer()[hero.numberHero];
-          gamePlay.changeCountOfHero(hero.numberHero);
-          hero.draw();
+          if (selectedHero == null) {
+            selectedHero = gamePlay.getHeroOfPlayer()[hero.numberHero];
+            gamePlay.changeCountOfHero(hero.numberHero);
+            hero.draw();
+          }
         }
       }
     });

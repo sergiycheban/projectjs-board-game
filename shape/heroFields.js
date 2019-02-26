@@ -40,6 +40,15 @@ HeroCell.prototype.draw = function() {
   }
 };
 
+HeroCell.prototype.clear = function() {
+  CanvasManagerHeroSelectionFields.context.clearRect(
+    this.x,
+    this.y,
+    this.width,
+    this.height
+  );
+};
+
 HeroCell.prototype.cellContainsCoordinates = function(clientX, clientY) {
   if (
     clientX > this.x &&
