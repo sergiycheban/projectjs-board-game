@@ -1,4 +1,4 @@
-const INDENT_FROM_BATTLEFIELD = 150;
+const INDENT_FROM_BATTLEFIELD = 30;
 const INDENT_FROM_START = 15;
 
 var selectedHero = null;
@@ -21,7 +21,8 @@ var CanvasManagerHeroSelectionFields = {
     for (let index = 0; index < listOfHeroes.length; index++) {
       this.heroCollection.push(
         new HeroCell(
-          CanvasManagerBattlefield.width + INDENT_FROM_BATTLEFIELD,
+          CanvasManagerBattlefield.width * CanvasManagerBattlefield.col +
+            INDENT_FROM_BATTLEFIELD,
           this.height * index + INDENT_FROM_START,
           this.width,
           this.height,
@@ -58,10 +59,17 @@ var CanvasManagerHeroSelectionFields = {
       for (var i = 0; i < heroCollection.length; i++) {
         var hero = heroCollection[i];
         if (hero.cellContainsCoordinates(e.clientX, e.clientY)) {
-          if (selectedHero == null) {
+          if (
+            selectedHero == null &&
+            gamePlay.getHeroOfPlayer()[hero.numberHero].count > 0
+          ) {
             selectedHero = gamePlay.getHeroOfPlayer()[hero.numberHero];
             gamePlay.changeCountOfHero(hero.numberHero);
+            CanvasManagerBattlefield.drawBoard();
+            CanvasManagerBattlefield.drawLockedCells();
             hero.draw();
+          } else {
+            alert("OoooooPS");
           }
         }
       }

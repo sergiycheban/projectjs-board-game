@@ -32,16 +32,12 @@ for (let index = 0; index < listOfHeroes.length; index++) {
   });
 }
 
-function startGame() {
-  gamePlay = new GamePlay(
-    heroForPlayer1,
-    heroForPlayer2,
-    CanvasManagerBattlefield.boardCollection
-  );
-  CanvasManagerBattlefield.initialize("#canvas");
-  CanvasManagerBattlefield.generationBattlefield();
-  CanvasManagerHeroSelectionFields.initialize("#canvas");
-  CanvasManagerHeroSelectionFields.generationHeroSelectionFields();
-
-  document.querySelector("#startGame").remove();
-}
+gamePlay = new GamePlay(
+  heroForPlayer1,
+  heroForPlayer2,
+  CanvasManagerBattlefield.boardCollection
+);
+CanvasManagerBattlefield.initialize("#canvas");
+CanvasManagerBattlefield.generationBattlefield();
+CanvasManagerHeroSelectionFields.initialize("#canvas");
+CanvasManagerHeroSelectionFields.generationHeroSelectionFields();

@@ -5,15 +5,14 @@ const MIN_NUMBER_OF_BARRIER = 1;
 var CanvasManagerBattlefield = {
   canvas: null,
   context: null,
-  content: null,
   color: null,
-  width: 800,
-  territoryPlayerA: 1,
+  width: 90,
+  territoryPlayerA: 2,
   territoryPlayerB: 5,
-  row: 8,
-  col: 10,
+  row: 7,
+  col: 9,
   boardCollection: [],
-  colorsForTerritoryPlayers: { light: "#90CAF9", dark: "#FFCC80" },
+  colorsForTerritoryPlayers: { light: "#4fc3f7", dark: "#ffab91" },
   colorsForTerritoryBattle: "#E0E0E0",
   initialize: function(element) {
     this.canvas = document.querySelector(element);
@@ -21,59 +20,69 @@ var CanvasManagerBattlefield = {
   },
 
   generationBattlefield: function() {
-    let squareWidth = this.width / this.row;
-    let totalSquares = this.row * this.col;
-    console.log(totalSquares);
-    let i = 0,
-      x = 0,
-      y = -1;
-    var boardRows = [];
-    for (i = 0; i < totalSquares; i++) {
-      if (i) var squareName = "row" + y + "col" + x;
-      x++;
-      if (i % this.col == 0) {
-        x = 0;
-        y++;
-        this.boardCollection.push(boardRows);
-        boardRows = [];
-      }
-      this.setTerritoryColor(y, x);
-      if (y > this.territoryPlayerA || y < this.territoryPlayerB) {
-        var arr = this.randomBarriersPlace();
-        for (let index = 0; index < arr.length; index++) {
-          if (arr[index] == i) {
-            this.color = "#000000";
+    var count = 1;
+    for (let i = 0; i < this.row; i++) {
+      this.color = "#e8eaf6";
+      for (let j = 0; j < this.col; j++) {
+        var randomList = this.randomBarriersPlace();
+        for (let index = 0; index < randomList.length; index++) {
+          if (randomList[index] == count) {
+            this.color = "#37474f";
           }
         }
+
+        count++;
+        if (this.territoryPlayerA > i || i >= this.territoryPlayerB) {
+          this.color = (i * 9 + j) % 2 ? "#4fc3f7" : "#ffab91";
+        }
+        this.boardCollection.push(
+          new Cell(
+            this.width * j,
+            this.width * i,
+            this.width,
+            null,
+            this.color,
+            null,
+            false
+          )
+        );
+        this.color = "#e8eaf6";
       }
-      boardRows.push(
-        new Cell(
-          x * squareWidth - squareWidth,
-          y * squareWidth,
-          squareWidth,
-          squareName,
-          // own,
-          this.color,
-          this.content
-        )
-      );
     }
-    this.boardCollection.splice(0, 1);
-    for (let index = 0; index < this.boardCollection.length; index++) {
-      this.boardCollection[index].splice(0, 1);
-    }
+
     this.drawBoard();
     this.clickOnCell();
   },
 
   drawBoard: function() {
     var boardRows = this.boardCollection;
+    for (let index = 0; index < boardRows.length; index++) {
+      boardRows[index].drawCell();
+      if (boardRows[index].content != null) {
+        boardRows[index].drawHeroInCell();
+      }
+    }
+  },
 
-    for (var i = 0; i < boardRows.length; i++) {
-      var row = boardRows[i];
-      for (var j = 0; j < row.length; j++) {
-        var square = boardRows[i][j];
-        square.drawCell();
+  drawLockedCells: function() {
+    var boardRows = this.boardCollection;
+    if (PLAYERS.PLAYER_ONE == true) {
+      for (let index = 0; index < boardRows.length; index++) {
+        if (2 * this.col - 1 < index) {
+          boardRows[index].lockedCells();
+          boardRows[index].isLock = true;
+        } else {
+          boardRows[index].isLock = false;
+        }
+      }
+    } else if (PLAYERS.PLAYER_TWO == true) {
+      for (let index = 0; index < boardRows.length; index++) {
+        if (5 * this.col > index) {
+          boardRows[index].lockedCells();
+          boardRows[index].isLock = true;
+        } else {
+          boardRows[index].isLock = false;
+        }
       }
     }
   },
@@ -81,29 +90,29 @@ var CanvasManagerBattlefield = {
   clickOnCell: function() {
     var boardRows = this.boardCollection;
 
+    var _this = this;
+
     this.canvas.addEventListener("click", function(e) {
       var hero = CanvasManagerHeroSelectionFields.getSelectedHero();
       for (var i = 0; i < boardRows.length; i++) {
-        var row = boardRows[i];
-        for (var j = 0; j < row.length; j++) {
-          var square = boardRows[i][j];
+        if (boardRows[i].cellContainsCoordinates(e.clientX, e.clientY)) {
+          var square = boardRows[i];
           if (square.cellContainsCoordinates(e.clientX, e.clientY)) {
-            if (square.hero == null || hero != null) {
+            if (square.hero == null && hero != null && square.isLock != true) {
               square.hero = hero;
+              _this.boardCollection[i].content = hero;
               hero = null;
               square.drawHeroInCell();
               gamePlay.changePlayer();
               CanvasManagerHeroSelectionFields.drawBoard();
               CanvasManagerHeroSelectionFields.setSelectedHeroNull();
               if (gamePlay.isEndPreparation()) {
+                _this.drawBoard();
                 gamePlay.startBattle();
                 CanvasManagerHeroSelectionFields.clearBoard();
               }
             } else {
-              console.log("square");
-              // square.color = "#9965f4";
-              // square.drawCell();
-              // square.drawHeroInCell();
+              alert("OoooooPS");
             }
           }
         }
@@ -135,7 +144,6 @@ var CanvasManagerBattlefield = {
     for (let index = 0; index < numberOfBarriers; index++) {
       arrayOfPlaceBarriesrs.push(
         Math.floor(Math.random() * this.getNumberOfCellTerritoryBattleCount()) +
-          1 +
           27
       );
     }

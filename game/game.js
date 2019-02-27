@@ -69,7 +69,3 @@ GamePlay.prototype.isEndPreparation = function() {
   }
   return isEndPreparation;
 };
-
-GamePlay.prototype.putHeroOnCell = function() {
-  console.log("putHeroOnCell");
-};
